@@ -18,7 +18,7 @@
 <div class="a3">
     <a class="a3_1" href="/students">Студенты</a>
     <a class="a3_2" href="/disciplines">Дисциплины</a>
-    <a class="a3_3" href="termsList.html">Семестры</a>
+    <a class="a3_3" href="/terms">Семестры</a>
 </div>
 
 </body>
