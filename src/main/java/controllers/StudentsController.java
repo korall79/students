@@ -22,8 +22,8 @@ public class StudentsController extends HttpServlet {
             ResultSet result = statement.executeQuery("select * from student;");
 
             while (result.next()){
-                String text = result.getInt("id")+ " " + result.getString("surname" + " "
-                        + result.getString("name"));
+                String text = result.getInt("id")+ " "
+                        + result.getString("surname") + " " + result.getString("name");
                 System.out.println(text);
             }
         } catch (Exception e) {
