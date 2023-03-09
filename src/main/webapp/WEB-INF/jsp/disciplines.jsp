@@ -42,7 +42,11 @@
         </table>
     </div>
     <div class="button3">
-        <div class="button31"><a class="button311" href="disciplineCreating.html"><button class="button3111">Создать дисциплину...</button></a></div>
+        <div class="button31"><a class="button311">
+            <form action="/discipline_create" method="get">
+                <button class="button3111">Создать дисциплину...</button>
+            </form>
+        </a></div>
         <div class="button32"><a class="button322" href="disciplineModifying.html"><button class="button3222">Модифицировать выбранную дисциплину...</button></a></div>
         <div class="button33"><a class="button333" href=""><button class="button3333">Удалить выбранную дисциплину...</button></a></div>
     </div>

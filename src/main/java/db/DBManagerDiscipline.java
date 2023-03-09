@@ -44,4 +44,12 @@ public class DBManagerDiscipline {
         }
         return disciplines;
     }
+
+    public  static void createDiscipline(String disciplineName){
+        try{
+            statement.execute(String.format("insert into `discipline` (`discipline`) values ('%s');",disciplineName));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
