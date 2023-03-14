@@ -1,6 +1,7 @@
 package controllers;
 
 import db.DBManager;
+import entity.Student;
 import servises.DateService;
 
 import javax.servlet.ServletException;
@@ -10,13 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(name = "StudentCreateController", urlPatterns = "/student_create")
-public class StudentCreateController extends HttpServlet {
-
+@WebServlet(name = "StudentModifyController", urlPatterns ="/student_modify")
+public class StudentModifyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/jsp/student_create.jsp").forward(req, resp);
+        String id = req.getParameter("idForModify");
+        Student student = DBManager.getStudentById(id);
+        req.setAttribute("student", student);
+        req.getRequestDispatcher("WEB-INF/jsp/student_modify.jsp").forward(req, resp);
+
     }
 
     @Override
@@ -25,17 +28,19 @@ public class StudentCreateController extends HttpServlet {
         String name = req.getParameter("name");
         String groupName = req.getParameter("group");
         String date = req.getParameter("date");
+        String id = req.getParameter("id");
 
         if (surname.equals("") || name.equals("") || groupName.equals("") || date.equals("")) {
             req.setAttribute("error", "1");
-            req.getRequestDispatcher("WEB-INF/jsp/student_create.jsp").forward(req, resp);
+            req.getRequestDispatcher("WEB-INF/jsp/student_modify.jsp").forward(req, resp);
             return;
         }
 
         String dateForFB = DateService.convertDateFormDB(date);
-
         int groupId = DBManager.getGroupId(groupName);
-        DBManager.createStudent(surname,name,groupId,dateForFB);
+
+       DBManager.modifyStudent(id,surname,name,groupId,dateForFB);
         resp.sendRedirect("/students");
+
     }
 }

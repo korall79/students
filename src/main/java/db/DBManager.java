@@ -2,6 +2,7 @@ package db;
 
 import entity.Group;
 import entity.Student;
+import servises.StringService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -82,4 +83,42 @@ public class DBManager {
             e.printStackTrace();
         }
     }
-}
+
+    public static void deleteStudents(String[] ids){
+        try {
+            statement.execute(String.format("update `student` set `status` = '0' where id in (%s);",
+                    StringService.convertIdsIntoString(ids)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Student getStudentById(String id) {
+        Student student = new Student();
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format("select s.id, surname, name, date, g.group" +
+                    "from student as s left join groupp as g on s.id_group = g.id where s.id = '%s';", id));
+            while (resultSet.next()) {
+                student.setId(resultSet.getInt(ID));
+                student.setSurname(resultSet.getString(SURNAME));
+                student.setName(resultSet.getString(NAME));
+                student.setDate(resultSet.getDate(DATE));
+
+                Group group = new Group();
+                group.setName(resultSet.getString(GROUP));
+                student.setGroup(group);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return student;
+    }
+
+    public  static void modifyStudent(String id, String surname, String name, int groupId, String date){
+        try{
+            statement.execute(String.format("UPDATE `student` SET `surname` = '%s', `name` = '%s',"+
+                    " `id group` = '%d' `date` = '%s' WHERE (`id` = '%s');",id, surname,name,groupId,date));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }}
