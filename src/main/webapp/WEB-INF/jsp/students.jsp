@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../resources/css/style.css">
     <title>Students Page</title>
+    <script src="../../resources/js/functions.js"></script>
 </head>
 <body>
 
@@ -31,9 +32,12 @@
                 <button class="e22">Создать студента...</button>
             </form>
             </a> <br></div> <br>
-
-            <div class="r"><a href="studentModifying.html"><button class="r11">Модифицировать выбранного студента...</button></a></div>
-            <div class="rr"><a href=""><button class="r22">Удалить выбранных студентов</button></a></div>
+            <div class="r"><a>
+                <button onclick="modifyStudents()" class="r11">Модифицировать выбранного студента...</button>
+            </a></div>
+            <div class="rr"><a>
+                <button onclick="deleteStudents()" class="r22">Удалить выбранных студентов</button>
+            </a></div>
         </div>
     </div>
     <div>
@@ -50,7 +54,7 @@
                 <tr>
                     <form>
                         <label>
-                            <td><input type="checkbox"></td>
+                            <td><input type="checkbox" value="${s.id}" name="studentId"></td>
                             <td>${s.surname}</td>
                             <td>${s.name}</td>
                             <td>${s.group.name}</td>
@@ -62,4 +66,10 @@
         </table>
     </div>
 </body>
+<form action="/student_delete" method="post" id="deleteForm">
+    <input type="hidden" name="idsForDelete" id="idsForDelete">
+</form>
+<form action="/student_modify" method="get" id="modifyForm">
+    <input type="hidden" name="idForModify" id="idForModify">
+</form>
 </html>
