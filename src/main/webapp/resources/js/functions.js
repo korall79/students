@@ -16,7 +16,7 @@ function  deleteStudents(){
 
 }
 
-function  modifyStudents(){
+function  modifyStudent(){
 
     const checkedCheckBoxes = document.querySelectorAll('input[name=studentId]:checked');
 

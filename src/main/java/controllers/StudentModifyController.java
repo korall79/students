@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "StudentModifyController", urlPatterns ="/student_modify")
+@WebServlet(name = "StudentModifyController", urlPatterns = "/student_modify")
 public class StudentModifyController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,10 +36,10 @@ public class StudentModifyController extends HttpServlet {
             return;
         }
 
-        String dateForFB = DateService.convertDateFormDB(date);
         int groupId = DBManager.getGroupId(groupName);
+        String dateForFB = DateService.convertDateFormDB(date);
 
-       DBManager.modifyStudent(id,surname,name,groupId,dateForFB);
+        DBManager.modifyStudent(id, surname, name, groupId, dateForFB);
         resp.sendRedirect("/students");
 
     }
