@@ -34,7 +34,7 @@
             </form>
             </a> <br></div> <br>
             <div class="r"><a>
-                <button onclick="modifyStudents()" class="r11">Модифицировать выбранного студента...</button>
+                <button onclick="modifyStudent()" class="r11">Модифицировать выбранного студента...</button>
             </a></div>
             <div class="rr"><a>
                 <button onclick="deleteStudents()" class="r22">Удалить выбранных студентов</button>

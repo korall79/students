@@ -38,7 +38,7 @@
             <td>${student.surname}</td>
             <td>${student.name}</td>
             <td>${student.group.name}</td>
-            <td>${student.date}</td>
+            <td><f:formatDate value="${student.date}" pattern="d/MM/yyy"/> </td>
         </tr>
     </table>
 </div>
@@ -54,7 +54,9 @@
             <c:forEach items="${grades}" var="g">
                 <tr>
                     <td>${g.discipline.name}</td>
-                    <td>${g.value}</td>
+                    <c:if test="${g.value ne -1}">
+                        <td>${g.value}</td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>
@@ -64,7 +66,7 @@
             <label >
                 Выбрать семестр
                 <select name="termId">
-                    <c:forEach items="${retms}" var="t">
+                    <c:forEach items="${terms}" var="t">
                         <c:choose>
                             <c:when test="${t.id == selectedTerm.id}">
                                 <option selected value="${t.id}">${t.name}</option>
@@ -73,14 +75,13 @@
                                 <option value="${t.id}">${t.name}</option>
                             </c:otherwise>
                         </c:choose>
-                        <option>${t.name}</option>
                     </c:forEach>
                 </select>
             </label>
             <button class="button1">Выбрать</button> <br>
             <input type ="hidden" name="idForProgress" value="${student.id}">
         </form>
-        <p>Средняя оценка за семестр: <input type="hidden"></p>
+        <p>Средняя оценка за семестр: <f:formatNumber value="${avgGrade}" maxFractionDigits="2"/> <input type="hidden"></p>
     </div>
 </div>
 </body>

@@ -1,6 +1,7 @@
 package controllers;
 
 import db.DBManager;
+import entity.Discipline;
 import entity.Grade;
 import entity.Student;
 import entity.Term;
@@ -47,12 +48,34 @@ public class StudentProgressController extends HttpServlet {
 
         //4.
         List<Grade> grades = DBManager.getGradesByStudentAndTermIds(studentId, String.valueOf(selectedTerm.getId()));
-
+        if (grades.isEmpty()) {
+            List<Discipline> disciplines = DBManager.getDisciplinesByTermId(String.valueOf(selectedTerm.getId()));
+            for (Discipline discipline : disciplines) {
+                Grade grade = new Grade();
+                grade.setDiscipline(discipline);
+                grade.setValue(-1);
+                grades.add(grade);
+            }
+        }
         //5.
+        req.setAttribute("avgGrade", getAverageGrade(grades));
         req.setAttribute("student", student);
         req.setAttribute("terms", terms);
         req.setAttribute("selectedTerm", selectedTerm);
         req.setAttribute("grades", grades);
         req.getRequestDispatcher("WEB-INF/jsp/student_progress.jsp").forward(req, resp);
+    }
+
+    private double getAverageGrade(List<Grade> grades, String termId) {
+        int sum = 0;
+        for (Grade grade : grades) {
+            sum += grade.getValue();
+        }
+        double result = sum / (double) grades.size();
+        if (result == -1){
+            return  0;
+        }else {
+            return result;
+        }
     }
 }
