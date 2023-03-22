@@ -66,7 +66,7 @@ public class StudentProgressController extends HttpServlet {
         req.getRequestDispatcher("WEB-INF/jsp/student_progress.jsp").forward(req, resp);
     }
 
-    private double getAverageGrade(List<Grade> grades, String termId) {
+    private double getAverageGrade(List<Grade> grades) {
         int sum = 0;
         for (Grade grade : grades) {
             sum += grade.getValue();

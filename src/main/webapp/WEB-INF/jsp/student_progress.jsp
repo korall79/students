@@ -15,7 +15,15 @@
 <body>
 <div>
     <h1>Система управления студентами и их успеваемостью</h1>
-    <a class="Logout" href="">Logout</a>
+    <c:choose>
+        <c:when test="${isAuthorised eq true}">
+            <p>Привет, ${login}</p>
+            a class="Logout" href="/logout">Logout</a>
+        </c:when>
+        <c:otherwise>
+            a class="Logout" href="/login">Login</a>
+        </c:otherwise>
+    </c:choose>
 </div>
 
 <div class="navP">
@@ -81,7 +89,7 @@
             <button class="button1">Выбрать</button> <br>
             <input type ="hidden" name="idForProgress" value="${student.id}">
         </form>
-        <p>Средняя оценка за семестр: <f:formatNumber value="${avgGrade}" maxFractionDigits="2"/> <input type="hidden"></p>
+        <p>Средняя оценка за семестр: <f:formatNumber value="${avgGrade}" maxFractionDigits="2"/><input type="hidden"></p>
     </div>
 </div>
 </body>
