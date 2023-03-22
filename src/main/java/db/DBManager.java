@@ -19,7 +19,7 @@ public class DBManager {
     private static final String GRADE_VALUE = "grade";
     private static final String DISCIPLINE_ID = "id_discipline";
     private static final String DISCIPLINE_NAME = "discipline";
-
+    private static final String ROLE = "role";
 
     static {
         try {
@@ -170,15 +170,44 @@ public class DBManager {
 
         List<Discipline> result = new ArrayList<>();
         try {
-            ResultSet resultSet = statement.executeQuery(String.format("select d.discipline from term_discipline as td left join discipline as d on td.id_discipline = d.id where id_term = '%s';"));
-        while (resultSet.next()){
-            Discipline discipline = new Discipline();
-            discipline.setName(resultSet.getString(DISCIPLINE_NAME));
-            result.add(discipline);
-        }
+            ResultSet resultSet = statement.executeQuery(String.format("select d.discipline from term_discipline as td left join discipline as d on td.id_discipline = d.id where id_term = '%s';", termId));
+            while (resultSet.next()) {
+                Discipline discipline = new Discipline();
+                discipline.setName(resultSet.getString(DISCIPLINE_NAME));
+                result.add(discipline);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static List<Role> getAllRoles() {
+
+        List<Role> result = new ArrayList<>();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM role;");
+            while (resultSet.next()) {
+                Role role = new Role();
+                role.setId(resultSet.getInt(ID));
+                role.setName(resultSet.getString(ROLE));
+                result.add(role);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static boolean isAuthorised(String login, String password, String roleId) {
+        try {
+            ResultSet resultSet = statement.executeQuery(String.format("select * from user_role as ur left join user as u on ur.id_user = u.id where ur.id_role = '%s' and u.user = '%s' and u.password = '%s';", roleId, login, password));
+            while (resultSet.next()) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
